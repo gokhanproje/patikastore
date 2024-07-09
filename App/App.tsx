@@ -9,7 +9,7 @@ import React from 'react';
 
 import ItemCard from "./components/ItemCard";
 
-import { FlatList, SafeAreaView, StyleSheet } from "react-native";
+import { FlatList, SafeAreaView, StyleSheet, Text, TextInput, View } from "react-native";
 import stock from "./stock.json";
 
 interface CardItem {
@@ -23,20 +23,36 @@ interface CardItem {
 function App(): React.JSX.Element {
 
   const renderItemCard = ({ item }: { item: CardItem }) => (
-    
+
     <ItemCard
       title={item.title}
       price={item.price}
       imageUrl={item.imgURL}
       in_stock={item.inStock}
     />
-    
+
   );
 
   return (
+
     <SafeAreaView style={styles.backgroundStyle}>
-      <FlatList numColumns={2} data={stock} renderItem={renderItemCard}/>
-      
+
+      <FlatList
+        ListHeaderComponent={
+          <View>
+            <Text style={styles.appTitle}>PatikaStore</Text>
+            <View style={styles.searchBarView}>
+              <TextInput placeholder='Ara...'>
+
+              </TextInput>
+
+            </View>
+          </View>}
+        numColumns={2}
+        data={stock}
+        renderItem={renderItemCard}
+      />
+
     </SafeAreaView>
   );
 }
@@ -45,6 +61,25 @@ const styles = StyleSheet.create({
   backgroundStyle: {
 
   },
+
+  appTitle: {
+    color: "purple",
+    fontSize: 36,
+    fontWeight: "900",
+    marginLeft: 16,
+
+  },
+
+  searchBarView: {
+    backgroundColor: "#D9DBDC",
+    margin: 12,
+    borderRadius: 200,
+    paddingLeft: 12,
+  },
+
+  searchBar: {
+
+  }
 
 });
 

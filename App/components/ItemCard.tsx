@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions, Image, StyleSheet, Text, View } from 'react-native';
+import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 type props = {
   title: string;
@@ -10,18 +10,22 @@ type props = {
 
 const ItemCard: React.FC<props> = ({title, price, imageUrl, in_stock }) => {
     return (
-      <View style={styles.cardBackground}>
+      <TouchableOpacity activeOpacity={.7}  style={styles.cardBackground}>
+        <View style={styles.imageView}>
         <Image style={styles.cardImage} source={{uri: imageUrl}} />
+        </View>
         <Text style={styles.cardItemTitle}>{title}</Text>
-        <Text style={styles.cardItemPrice}>{price}</Text>
+        {in_stock ? <Text  style={styles.cardItemPrice}>{price}</Text> : <Text  style={styles.cardNotInStock}>STOKTA YOK</Text> }
+        
 
-      </View>
+      </TouchableOpacity>
     )
 }
 
 const styles = StyleSheet.create({
 
     cardBackground: {
+      flex: 1,
       width: Dimensions.get("window").width/2.2,
       margin: 6,
       backgroundColor: "#D9DBDC",
@@ -29,8 +33,14 @@ const styles = StyleSheet.create({
 
     },
 
+    imageView: {
+      margin: 8,
+      backgroundColor: "white",
+    },
+
     cardImage: {
-        margin: 8,
+        resizeMode: "contain",
+        
         height: Dimensions.get("window").height/4,
     },
 
@@ -39,7 +49,6 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: "900",
         marginLeft: 16,
-
     },
 
     cardItemPrice: {
@@ -49,8 +58,17 @@ const styles = StyleSheet.create({
       marginLeft: 16,
       marginTop: 6,
       marginBottom: 16,
-      
-  }
+  },
+
+  cardNotInStock: {
+    color: "red",
+    fontSize: 16,
+    fontWeight: "500",
+    marginLeft: 16,
+    marginTop: 6,
+    marginBottom: 16,
+}
+
 
 });
 
