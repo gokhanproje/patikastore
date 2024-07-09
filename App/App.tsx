@@ -7,14 +7,36 @@
 
 import React from 'react';
 
-import { SafeAreaView, StyleSheet } from "react-native";
+import ItemCard from "./components/ItemCard";
 
+import { FlatList, SafeAreaView, StyleSheet } from "react-native";
+import stock from "./stock.json";
 
+interface CardItem {
+  id: number;
+  title: string;
+  imgURL: string;
+  price: string;
+  inStock: boolean;
+}
 
 function App(): React.JSX.Element {
+
+  const renderItemCard = ({ item }: { item: CardItem }) => (
+    
+    <ItemCard
+      title={item.title}
+      price={item.price}
+      imageUrl={item.imgURL}
+      in_stock={item.inStock}
+    />
+    
+  );
+
   return (
     <SafeAreaView style={styles.backgroundStyle}>
-
+      <FlatList numColumns={2} data={stock} renderItem={renderItemCard}/>
+      
     </SafeAreaView>
   );
 }
